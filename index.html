@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Európai Országok — Kezdőlap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Európa" id="top-image">
+    <h1>Európai országok</h1>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Kezdőlap</a></li>
+        <li><a href="orszagok.html">Országok</a></li>
+        <li><a href="galeria.html">Galéria</a></li>
+        <li><a href="urlap.html">Új ország</a></li>
+        <li><a href="kapcsolat.html">Kapcsolat</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <section>
+        <h2>Rövid bemutatás</h2>
+        <p>Ez a weboldal néhány európai ország adatait és képeit mutatja be.</p>
+      </section>
+
+      <section>
+        <h2>Video bemutató</h2>
+        <video id="promo" width="640" controls>
+          <source src="video/europa.mp4" type="video/mp4">
+          A böngésződ nem támogatja a videó elemet.
+        </video>
+        <div class="video-controls">
+          <button id="playBtn">Lejátszás</button>
+          <button id="pauseBtn">Szünet</button>
+          <button id="rewindBtn"><< Visszatekerés 5s</button>
+        </div>
+      </section>
+    </article>
+
+    <aside>
+      <h3>Gyorslinkek</h3>
+      <ul>
+        <li><a href="orszagok.html">Országlista</a></li>
+        <li><a href="galeria.html">Zászlók és látványosságok</a></li>
+      </ul>
+    </aside>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

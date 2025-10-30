@@ -1,0 +1,32 @@
+[
+  {
+    "nev": "Magyarország",
+    "fovaros": "Budapest",
+    "nepesseg": 9757000,
+    "eu": true
+  },
+  {
+    "nev": "Németország",
+    "fovaros": "Berlin",
+    "nepesseg": 83149300,
+    "eu": true
+  },
+  {
+    "nev": "Franciaország",
+    "fovaros": "Párizs",
+    "nepesseg": 67081000,
+    "eu": true
+  },
+  {
+    "nev": "Norvégia",
+    "fovaros": "Oslo",
+    "nepesseg": 5370000,
+    "eu": false
+  },
+  {
+    "nev": "Olaszország",
+    "fovaros": "Róma",
+    "nepesseg": 59554023,
+    "eu": true
+  }
+]

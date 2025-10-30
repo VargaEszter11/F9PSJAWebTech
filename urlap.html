@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Új ország — Űrlap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Új ország hozzáadása</h1>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Kezdőlap</a></li>
+        <li><a href="orszagok.html">Országok</a></li>
+        <li><a href="galeria.html">Galéria</a></li>
+        <li><a href="urlap.html">Új ország</a></li>
+        <li><a href="kapcsolat.html">Kapcsolat</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <form id="orszagForm">
+        <label for="nev">Ország neve:</label>
+        <input type="text" id="nev" name="nev" required>
+
+        <label for="fovaros">Főváros:</label>
+        <input type="text" id="fovaros" name="fovaros" required>
+
+        <label for="nepesseg">Lakosság (fő):</label>
+        <input type="number" id="nepesseg" name="nepesseg" min="1" required>
+
+        <label for="eu">EU tag?</label>
+        <input type="checkbox" id="eu" name="eu">
+
+        <label for="alapit">Alapítás/Dátum:</label>
+        <input type="date" id="alapit" name="alapit">
+
+        <label for="szin">Nemzeti szín:</label>
+        <input type="color" id="szin" name="szin" value="#0000ff">
+
+        <label for="leiras">Rövid leírás:</label>
+        <textarea id="leiras" name="leiras" rows="4"></textarea>
+
+        <button type="submit">Mentés</button>
+      </form>
+
+      <div id="uzenet" aria-live="polite"></div>
+    </article>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
