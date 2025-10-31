@@ -82,3 +82,65 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 });
+
+// Zászlós rész
+document.addEventListener('DOMContentLoaded', () => {
+  const zaszloContainer = document.getElementById('zaszloGaleria');
+  const modal = document.getElementById('infoModal');
+  const orszagInfo = document.getElementById('orszagInfo');
+  const closeBtn = document.getElementById('closeModal');
+
+  if (!zaszloContainer) return;
+
+  fetch('adatok.json')
+    .then(r => {
+      if (!r.ok) throw new Error('Nem sikerült betölteni a JSON-t');
+      return r.json();
+    })
+    .then(data => {
+      zaszloContainer.innerHTML = '';
+      data.forEach(o => {
+        const fig = document.createElement('figure');
+        fig.classList.add('zaszlo-elem');
+        fig.innerHTML = `
+          <img src="${o.kep}" alt="${o.nev} zászló" class="zaszlo-kep">
+          <figcaption>${o.nev}</figcaption>
+        `;
+        fig.addEventListener('click', () => {
+          orszagInfo.innerHTML = `
+            <h3>${o.nev}</h3>
+            <img src="${o.kep}" alt="${o.nev} zászló" style="width:140px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+            <p><strong>Főváros:</strong> ${o.fovaros}</p>
+            <p><strong>Lakosság:</strong> ${o.nepesseg.toLocaleString()} fő</p>
+            <p><strong>EU tag:</strong> ${o.eu ? 'Igen' : 'Nem'}</p>
+          `;
+          modal.style.display = 'flex';
+          document.body.classList.add('blurred');
+        });
+        zaszloContainer.appendChild(fig);
+      });
+    })
+    .catch(err => {
+      zaszloContainer.innerHTML = `<p style="color:red;">Hiba: ${err.message}</p>`;
+      console.error(err);
+    });
+
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+    document.body.classList.remove('blurred');
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      document.body.classList.remove('blurred');
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modal.style.display = 'none';
+      document.body.classList.remove('blurred');
+    }
+  });
+});

@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="hu">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Európai Országok — Kezdőlap</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header>
-    <img src="" alt="Európa" id="top-image">
     <h1>Európai országok</h1>
     <nav>
       <ul class="menu">
@@ -16,7 +17,7 @@
         <li><a href="orszagok.html">Országok</a></li>
         <li><a href="galeria.html">Galéria</a></li>
         <li><a href="urlap.html">Új ország</a></li>
-        <li><a href="kapcsolat.html">Kapcsolat</a></li>
+        <li><a href="terkep.html">Térkép</a></li>
       </ul>
     </nav>
   </header>
@@ -29,17 +30,20 @@
       </section>
 
       <section>
-        <h2>Video bemutató</h2>
-        <video id="promo" width="640" controls>
-          <source src="video/europa.mp4" type="video/mp4">
-          A böngésződ nem támogatja a videó elemet.
-        </video>
+        <h2>Videó bemutató</h2>
+        <iframe width="560" height="315"
+          src="https://www.youtube.com/embed/0xhzwDXfLds?list=RD0xhzwDXfLds&start_radio=1" title="Europe video"
+          frameborder="0" style="display:block; margin: 0 auto; border-radius: 8px;"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
         <div class="video-controls">
           <button id="playBtn">Lejátszás</button>
           <button id="pauseBtn">Szünet</button>
-          <button id="rewindBtn"><< Visszatekerés 5s</button>
+          <button id="rewindBtn">&lt;&lt; Visszatekerés 5s</button>
         </div>
       </section>
+
     </article>
 
     <aside>
@@ -54,4 +58,5 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="script.js"></script>
 </body>
+
 </html>

@@ -223,3 +223,68 @@ a:hover {
     gap: 0.6rem;
   }
 }
+
+/* Zászlóra nyomás */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  animation: popIn 0.3s ease;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: var(--bg-accent-dark);
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Háttér elmosása*/
+body.blurred main,
+body.blurred header,
+body.blurred footer {
+  filter: blur(6px);
+  transition: filter 0.3s ease;
+}
+

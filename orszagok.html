@@ -15,7 +15,7 @@
         <li><a href="orszagok.html">Országok</a></li>
         <li><a href="galeria.html">Galéria</a></li>
         <li><a href="urlap.html">Új ország</a></li>
-        <li><a href="kapcsolat.html">Kapcsolat</a></li>
+        <li><a href="terkep.html">Térkép</a></li>
       </ul>
     </nav>
   </header>
@@ -23,7 +23,13 @@
   <main>
     <article>
       <section>
-        <h2>Országok táblázata</h2>
+        <h2>Keresés</h2>
+        <input type="text" id="search" placeholder="Keresés ország szerint">
+        <button id="toggleBtn">Mutat / Elrejt táblázat</button>
+      </section>
+
+      <section>
+        <h2>Országok listája</h2>
         <div id="loader">Betöltés...</div>
         <table id="orszagTabla">
           <thead>
@@ -33,11 +39,6 @@
         </table>
       </section>
 
-      <section>
-        <h2>Keresés</h2>
-        <input type="text" id="search" placeholder="Keresés ország szerint">
-        <button id="toggleBtn">Mutat / Elrejt táblázat</button>
-      </section>
     </article>
   </main>
 

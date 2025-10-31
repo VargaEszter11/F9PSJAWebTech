@@ -3,30 +3,140 @@
     "nev": "Magyarország",
     "fovaros": "Budapest",
     "nepesseg": 9757000,
-    "eu": true
+    "eu": true,
+    "kep": "images/hu_flag.png"
   },
   {
     "nev": "Németország",
     "fovaros": "Berlin",
     "nepesseg": 83149300,
-    "eu": true
+    "eu": true,
+    "kep": "images/de_flag.png"
   },
   {
     "nev": "Franciaország",
     "fovaros": "Párizs",
     "nepesseg": 67081000,
-    "eu": true
-  },
-  {
-    "nev": "Norvégia",
-    "fovaros": "Oslo",
-    "nepesseg": 5370000,
-    "eu": false
+    "eu": true,
+    "kep": "images/fr_flag.png"
   },
   {
     "nev": "Olaszország",
     "fovaros": "Róma",
     "nepesseg": 59554023,
-    "eu": true
+    "eu": true,
+    "kep": "images/it_flag.png"
+  },
+  {
+    "nev": "Spanyolország",
+    "fovaros": "Madrid",
+    "nepesseg": 47450795,
+    "eu": true,
+    "kep": "images/sp_flag.svg"
+  },
+  {
+    "nev": "Portugália",
+    "fovaros": "Lisszabon",
+    "nepesseg": 10305564,
+    "eu": true,
+    "kep": "images/por_flag.png"
+  },
+  {
+    "nev": "Ausztria",
+    "fovaros": "Bécs",
+    "nepesseg": 8917205,
+    "eu": true,
+    "kep": "images/au_flag.png"
+  },
+  {
+    "nev": "Svájc",
+    "fovaros": "Bern",
+    "nepesseg": 8796669,
+    "eu": false,
+    "kep": "images/ch_flag.png"
+  },
+  {
+    "nev": "Lengyelország",
+    "fovaros": "Varsó",
+    "nepesseg": 37958138,
+    "eu": true,
+    "kep": "images/pl_flag.png"
+  },
+  {
+    "nev": "Csehország",
+    "fovaros": "Prága",
+    "nepesseg": 10708981,
+    "eu": true,
+    "kep": "images/cz_flag.png"
+  },
+  {
+    "nev": "Szlovákia",
+    "fovaros": "Pozsony",
+    "nepesseg": 5456362,
+    "eu": true,
+    "kep": "images/sl_flag.png"
+  },
+  {
+    "nev": "Szlovénia",
+    "fovaros": "Ljubljana",
+    "nepesseg": 2119675,
+    "eu": true,
+    "kep": "images/si_flag.png"
+  },
+  {
+    "nev": "Horvátország",
+    "fovaros": "Zágráb",
+    "nepesseg": 3850000,
+    "eu": true,
+    "kep": "images/cr_flag.png"
+  },
+  {
+    "nev": "Norvégia",
+    "fovaros": "Oslo",
+    "nepesseg": 5370000,
+    "eu": false,
+    "kep": "images/no_flag.png"
+  },
+  {
+    "nev": "Svédország",
+    "fovaros": "Stockholm",
+    "nepesseg": 10415811,
+    "eu": true,
+    "kep": "images/se_flag.png"
+  },
+  {
+    "nev": "Finnország",
+    "fovaros": "Helsinki",
+    "nepesseg": 5540720,
+    "eu": true,
+    "kep": "images/fi_flag.png"
+  },
+  {
+    "nev": "Dánia",
+    "fovaros": "Koppenhága",
+    "nepesseg": 5889575,
+    "eu": true,
+    "kep": "images/dk_flag.png"
+  },
+  {
+    "nev": "Belgium",
+    "fovaros": "Brüsszel",
+    "nepesseg": 11589623,
+    "eu": true,
+    "kep": "images/be_flag.png"
+  },
+  {
+    "nev": "Hollandia",
+    "fovaros": "Amszterdam",
+    "nepesseg": 17650200,
+    "eu": true,
+    "kep": "images/nl_flag.png"
+  },
+  {
+    "nev": "Görögország",
+    "fovaros": "Athén",
+    "nepesseg": 10423054,
+    "eu": true,
+    "kep": "images/gr_flag.png"
   }
 ]

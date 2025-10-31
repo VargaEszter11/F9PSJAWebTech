@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="hu">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Galéria</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header>
     <h1>Galéria — Népszerű európai helyek</h1>
@@ -15,7 +17,7 @@
         <li><a href="orszagok.html">Országok</a></li>
         <li><a href="galeria.html">Galéria</a></li>
         <li><a href="urlap.html">Új ország</a></li>
-        <li><a href="kapcsolat.html">Kapcsolat</a></li>
+        <li><a href="terkep.html">Térkép</a></li>
       </ul>
     </nav>
   </header>
@@ -23,20 +25,7 @@
   <main>
     <section>
       <h2>Zászlók</h2>
-      <div class="gallery">
-        <figure>
-          <img src="images/fr_flag.png" alt="Franciaország zászló">
-          <figcaption>Franciaország</figcaption>
-        </figure>
-        <figure>
-          <img src="images/de_flag.png" alt="Németország zászló">
-          <figcaption>Németország</figcaption>
-        </figure>
-        <figure>
-          <img src="images/it_flag.png" alt="Olaszország zászló">
-          <figcaption>Olaszország</figcaption>
-        </figure>
-      </div>
+      <div id="zaszloGaleria" class="gallery"></div>
     </section>
 
     <section>
@@ -54,5 +43,15 @@
     </section>
   </main>
 
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <div id="orszagInfo"></div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

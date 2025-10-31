@@ -15,14 +15,14 @@
         <li><a href="orszagok.html">Országok</a></li>
         <li><a href="galeria.html">Galéria</a></li>
         <li><a href="urlap.html">Új ország</a></li>
-        <li><a href="kapcsolat.html">Kapcsolat</a></li>
+        <li><a href="terkep.html">Térkép</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
     <article>
-      <form id="orszagForm">
+      <form id="orszagForm" enctype="multipart/form-data">
         <label for="nev">Ország neve:</label>
         <input type="text" id="nev" name="nev" required>
 
@@ -43,6 +43,14 @@
 
         <label for="leiras">Rövid leírás:</label>
         <textarea id="leiras" name="leiras" rows="4"></textarea>
+
+        <label for="zaszlo">Zászló feltöltése:</label>
+        <input type="file" id="zaszlo" name="zaszlo" accept="image/*" required>
+
+        <div id="preview-container" style="display:none;">
+          <p>Előnézet:</p>
+          <img id="preview" src="" alt="Zászló előnézet" style="max-width:150px;border:1px solid #ccc;border-radius:6px;">
+        </div>
 
         <button type="submit">Mentés</button>
       </form>
