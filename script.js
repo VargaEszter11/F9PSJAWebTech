@@ -10,16 +10,27 @@ document.addEventListener('DOMContentLoaded', function(){
   const loader = document.getElementById('loader');
   if(tabla){
     fetch('adatok.json')
-      .then(r=>r.json())
-      .then(data=>{
-        loader.style.display='none';
-        data.forEach(o=>{
+      .then(r => r.json())
+      .then(data => {
+        loader.style.display = 'none';
+
+        // 🔹 Merge with localStorage data
+        const saved = JSON.parse(localStorage.getItem('orszagok')) || [];
+        const combined = [...data, ...saved];
+
+        combined.forEach(o => {
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td>${o.nev}</td><td>${o.fovaros}</td><td>${o.nepesseg.toLocaleString()}</td><td>${o.eu ? 'Igen' : 'Nem'}</td>`;
+          tr.innerHTML = `
+            <td>${o.nev}</td>
+            <td>${o.fovaros}</td>
+            <td>${o.nepesseg.toLocaleString()}</td>
+            <td>${o.eu ? 'Igen' : 'Nem'}</td>
+          `;
+          if (saved.includes(o)) tr.style.backgroundColor = '#e9ffe9'; // highlight localStorage entries
           tabla.appendChild(tr);
         });
       })
-      .catch(err=>{
+      .catch(err => {
         loader.textContent = 'Hiba a betöltéskor.';
         console.error(err);
       });
@@ -50,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function(){
         const el = document.getElementById(id);
         if(!el.value || (el.type==='number' && Number(el.value) <= 0)){
           el.classList.add('error'); valid = false;
-          const span = document.createElement('div'); span.textContent = `Hiba: ${el.previousElementSibling.textContent}`;
         } else {
           el.classList.remove('error');
         }
@@ -69,21 +79,30 @@ document.addEventListener('DOMContentLoaded', function(){
         eu: document.getElementById('eu').checked,
         alapit: document.getElementById('alapit').value,
         szin: document.getElementById('szin').value,
-        leiras: document.getElementById('leiras').value
+        leiras: document.getElementById('leiras').value,
+        kep: document.getElementById('kep')?.value || 'default.png'
       };
 
+      // 🔹 Save to localStorage
+      let orszagok = JSON.parse(localStorage.getItem('orszagok')) || [];
+      orszagok.push(payload);
+      localStorage.setItem('orszagok', JSON.stringify(orszagok));
+
       uzenet.style.color = 'green';
-      uzenet.textContent = 'Sikeres mentés (például a JSON-hez hozzáadható). Lásd alább:';
+      uzenet.textContent = 'Sikeres mentés (localStorage-be mentve is). Lásd alább:';
       const pre = document.createElement('pre');
       pre.textContent = JSON.stringify(payload, null, 2);
       uzenet.appendChild(pre);
 
-      $('#orszagForm').fadeOut(400, function(){ this.reset(); $(this).fadeIn(400); });
+      $('#orszagForm').fadeOut(400, function(){ 
+        this.reset(); 
+        $(this).fadeIn(400); 
+      });
     });
   }
 });
 
-// Zászlós rész
+// 🔸 Zászlós rész
 document.addEventListener('DOMContentLoaded', () => {
   const zaszloContainer = document.getElementById('zaszloGaleria');
   const modal = document.getElementById('infoModal');
@@ -99,17 +118,24 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(data => {
       zaszloContainer.innerHTML = '';
-      data.forEach(o => {
+
+      // 🔹 Merge with localStorage data
+      const saved = JSON.parse(localStorage.getItem('orszagok')) || [];
+      const combined = [...data, ...saved];
+
+      combined.forEach(o => {
         const fig = document.createElement('figure');
         fig.classList.add('zaszlo-elem');
         fig.innerHTML = `
-          <img src="${o.kep}" alt="${o.nev} zászló" class="zaszlo-kep">
+          <img src="${o.kep || 'default.png'}" alt="${o.nev} zászló" class="zaszlo-kep">
           <figcaption>${o.nev}</figcaption>
         `;
+        if (saved.includes(o)) fig.style.backgroundColor = '#e9ffe9'; // highlight localStorage entries
+
         fig.addEventListener('click', () => {
           orszagInfo.innerHTML = `
             <h3>${o.nev}</h3>
-            <img src="${o.kep}" alt="${o.nev} zászló" style="width:140px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+            <img src="${o.kep || 'default.png'}" alt="${o.nev} zászló" style="width:140px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);">
             <p><strong>Főváros:</strong> ${o.fovaros}</p>
             <p><strong>Lakosság:</strong> ${o.nepesseg.toLocaleString()} fő</p>
             <p><strong>EU tag:</strong> ${o.eu ? 'Igen' : 'Nem'}</p>
