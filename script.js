@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function(){
       .then(data => {
         loader.style.display = 'none';
 
-        // 🔹 Merge with localStorage data
+        // Merge with localStorage data
         const saved = JSON.parse(localStorage.getItem('orszagok')) || [];
         const combined = [...data, ...saved];
 
@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function(){
             <td>${o.nepesseg.toLocaleString()}</td>
             <td>${o.eu ? 'Igen' : 'Nem'}</td>
           `;
-          if (saved.includes(o)) tr.style.backgroundColor = '#e9ffe9'; // highlight localStorage entries
           tabla.appendChild(tr);
         });
       })
@@ -83,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function(){
         kep: document.getElementById('kep')?.value || 'default.png'
       };
 
-      // 🔹 Save to localStorage
+      // Save to localStorage
       let orszagok = JSON.parse(localStorage.getItem('orszagok')) || [];
       orszagok.push(payload);
       localStorage.setItem('orszagok', JSON.stringify(orszagok));
@@ -102,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-// 🔸 Zászlós rész
+// Zászlós rész
 document.addEventListener('DOMContentLoaded', () => {
   const zaszloContainer = document.getElementById('zaszloGaleria');
   const modal = document.getElementById('infoModal');
@@ -119,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => {
       zaszloContainer.innerHTML = '';
 
-      // 🔹 Merge with localStorage data
+      // Merge with localStorage data
       const saved = JSON.parse(localStorage.getItem('orszagok')) || [];
       const combined = [...data, ...saved];
 
@@ -130,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="${o.kep || 'default.png'}" alt="${o.nev} zászló" class="zaszlo-kep">
           <figcaption>${o.nev}</figcaption>
         `;
-        if (saved.includes(o)) fig.style.backgroundColor = '#e9ffe9'; // highlight localStorage entries
 
         fig.addEventListener('click', () => {
           orszagInfo.innerHTML = `
