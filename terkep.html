@@ -3,12 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Térkép</title>
+  <title>Európa-látnivalók</title>
   <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    main { padding:16px; }
+    #map { height:80vh; width:100%; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+    .popup-content { text-align:center; max-width:240px; }
+    .popup-content img { width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:6px; box-shadow:0 1px 4px rgba(0,0,0,0.15); }
+    .popup-content h3 { margin:4px 0; font-size:1rem; }
+    .popup-content p { margin:0; font-size:0.85rem; color:#333; }
+    .legend { margin-top:10px; font-size:0.9rem; color:#555; }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Főbb látványosságok</h1>
+    <h1>Térkép — európai látnivalók</h1>
     <nav>
       <ul class="menu">
         <li><a href="index.html">Kezdőlap</a></li>
@@ -21,10 +32,86 @@
   </header>
 
   <main>
-    <aside>
-      <h3>Térkép</h3>
-      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=16.35%2C47.18%2C19.15%2C48.20&amp;layer=mapnik" style="width:100%;height:300px;border:0"></iframe>
-    </aside>
+    <div id="map"></div>
   </main>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([54, 15], 4);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap hozzájárulók'
+    }).addTo(map);
+
+    const places = [
+      { country: 'Albánia', name: 'Berat', coords: [40.7051, 19.9526], img: 'images/berat.jpg', desc: 'Óváros és vár, híres történelmi házaival.' },
+      { country: 'Andorra', name: 'Andorra la Vella', coords: [42.5078, 1.5211], img: 'images/andorra.jpg', desc: 'Kis pireneusi főváros – hegyi panorámák és bevásárlás.' },
+      { country: 'Ausztria', name: 'Schönbrunn (Bécs)', coords: [48.1845, 16.3122], img: 'images/schönbrunn.jpeg', desc: 'A Habsburgok nyári rezidenciája, pompás kertekkel.' },
+      { country: 'Fehéroroszország', name: 'Minszk', coords: [53.9006, 27.5590], img: 'images/minsk.jpg', desc: 'Főváros – szovjet és modern építészet keveréke.' },
+      { country: 'Belgium', name: 'Brüsszel - Grand Place', coords: [50.8466, 4.3528], img: 'images/brussels.jpg', desc: 'Díszes főtér, városháza és gildeházak.' },
+      { country: 'Bosznia és Hercegovina', name: 'Stari Most (Mostar)', coords: [43.3373, 17.8085], img: 'images/mostar.jpg', desc: 'Híres török híd és óváros.' },
+      { country: 'Bulgária', name: 'Rila-kolostor', coords: [42.1333, 23.3333], img: 'images/rila.jpg', desc: 'Ortodox kolostor gyönyörű freskókkal.' },
+      { country: 'Horvátország', name: 'Plitvicei-tavak', coords: [44.8804, 15.6167], img: 'images/plitvice.jpg', desc: 'Türkiz tavak és vízesések, nemzeti park.' },
+      { country: 'Ciprus', name: 'Paphos régészeti terület', coords: [34.7721, 32.4295], img: 'images/paphos.jpg', desc: 'Ókori mozaikok és történelmi emlékek.' },
+      { country: 'Csehország', name: 'Prága - Károly híd', coords: [50.0865, 14.4114], img: 'images/prague.jpg', desc: 'Középkori híd, panoráma a Várnegyedre.' },
+      { country: 'Dánia', name: 'Koppenhága - Nyhavn', coords: [55.6805, 12.5889], img: 'images/nyhavn.jpg', desc: 'Színes házak és hangulatos csatornapart.' },
+      { country: 'Észtország', name: 'Tallinn óvárosa', coords: [59.4370, 24.7536], img: 'images/tallinn.jpg', desc: 'Középkori városfalak és macskaköves utcák.' },
+      { country: 'Finnország', name: 'Helsinki - Székesegyház', coords: [60.1699, 24.9526], img: 'images/helsinki.jpg', desc: 'Neoklasszikus dóm a város szívében.' },
+      { country: 'Franciaország', name: 'Eiffel-torony (Párizs)', coords: [48.8584, 2.2945], img: 'images/eiffel.jpg', desc: 'Világszerte ismert párizsi jelkép.' },
+      { country: 'Németország', name: 'Brandenburgi kapu (Berlin)', coords: [52.5163, 13.3777], img: 'images/brandenburg.jpg', desc: 'Berlin ikonikus emlékműve.' },
+      { country: 'Görögország', name: 'Akropolisz (Athén)', coords: [37.9715, 23.7257], img: 'images/acropolis.jpg', desc: 'Ókori fellegvár a Parthenonnal.' },
+      { country: 'Magyarország', name: 'Országház (Budapest)', coords: [47.5076, 19.0452], img: 'images/parlament.jpg', desc: 'Neogótikus stílusú magyar Parlament.' },
+      { country: 'Izland', name: 'Gullfoss-vízesés', coords: [64.3275, -20.1218], img: 'images/gullfoss.jpeg', desc: 'Erőteljes vízesés a Golden Circle útvonalon.' },
+      { country: 'Írország', name: 'Cliffs of Moher', coords: [52.9715, -9.4309], img: 'images/moher.jpeg', desc: 'Lélegzetelállító tengerparti sziklák.' },
+      { country: 'Olaszország', name: 'Colosseum (Róma)', coords: [41.8902, 12.4922], img: 'images/colosseum.jpg', desc: 'Ókori római amfiteátrum.' },
+      { country: 'Koszovó', name: 'Prizren óvárosa', coords: [42.2150, 20.7390], img: 'images/prizren.jpeg', desc: 'Történelmi város a festői környezettel.' },
+      { country: 'Lettország', name: 'Riga óvárosa', coords: [56.9460, 24.1059], img: 'images/riga.jpg', desc: 'Szépen megőrzött régi városrész.' },
+      { country: 'Liechtenstein', name: 'Vaduz-kastély', coords: [47.1410, 9.5215], img: 'images/vaduz.jpg', desc: 'A kis hercegség jellegzetes kastélya.' },
+      { country: 'Litvánia', name: 'Vilnius óvárosa', coords: [54.6872, 25.2797], img: 'images/vilnius.jpg  ', desc: 'Barokk hangulatú óváros és templomok.' },
+      { country: 'Luxemburg', name: 'Luxemburgi várnegyed', coords: [49.6116, 6.1319], img: 'images/luxemburg.jpg', desc: 'Városfalak, kanyonok és történelmi épületek.' },
+      { country: 'Málta', name: 'Valletta - Grand Harbour', coords: [35.8989, 14.5146], img: 'images/malta.jpg', desc: 'Történelmi erődváros a Földközi-tengeren.' },
+      { country: 'Moldova', name: 'Orheiul Vechi', coords: [47.2316, 28.9908], img: 'images/orheiul_vechi.jpg', desc: 'Ősi szikla- és kolostorkomplexum.' },
+      { country: 'Montenegró', name: 'Kotor óvárosa', coords: [42.4247, 18.7713], img: 'images/kotor.jpg', desc: 'Adriai-öböl romantikus középkori városa.' },
+      { country: 'Hollandia', name: 'Rotterdam - kikötő', coords: [51.9225, 4.4792], img: 'images/rotterdam.jpg', desc: 'Modern építészet és Európa egyik legnagyobb kikötője.' },
+      { country: 'Észak-Macedónia', name: 'Ohrid-tó', coords: [41.1231, 20.8016], img: 'images/ohrid.jpg', desc: 'Történelmi strandolás és óváros.' },
+      { country: 'Norvégia', name: 'Geirangerfjord', coords: [62.1010, 7.0948], img: 'images/geirangerfjord.jpg', desc: 'Lélegzetelállító fjord és vízesések.' },
+      { country: 'Lengyelország', name: 'Wawel-kastély (Krakkó)', coords: [50.0544, 19.9366], img: 'images/wawel.jpg', desc: 'Történelmi királyi rezidencia.' },
+      { country: 'Portugália', name: 'Belém-torony (Lisszabon)', coords: [38.6916, -9.2159], img: 'images/belem.jpg', desc: 'Felfedezők korának emlékműve a Tejo partján.' },
+      { country: 'Románia', name: 'Bran-kastély', coords: [45.5155, 25.3672], img: 'images/bran.jpeg', desc: 'Középkori erőd, közel Brassóhoz.' },
+      { country: 'Oroszország', name: 'Vörös tér (Moszkva)', coords: [55.7541, 37.6204], img: 'images/red_square.jpg', desc: 'A Kreml és a Szent Bazil-székesegyház környéke.' },
+      { country: 'Szerbia', name: 'Belgrád - Kalemegdan', coords: [44.8190, 20.4522], img: 'images/kalemegdan.jpg', desc: 'Történelmi erődpark a két folyó találkozásánál.' },
+      { country: 'Szlovákia', name: 'Pozsony vára', coords: [48.1420, 17.1008], img: 'images/pozsony.jpeg', desc: 'A Duna fölé magasodó történelmi vár.' },
+      { country: 'Szlovénia', name: 'Bledi-tó', coords: [46.3625, 14.0936], img: 'images/bled.jpg', desc: 'Festői tó kis szigettel és templommal.' },
+      { country: 'Spanyolország', name: 'Sagrada Família (Barcelona)', coords: [41.4036, 2.1744], img: 'images/sagrada_familia.jpg', desc: 'Gaudí különleges, még épülő katedrálisa.' },
+      { country: 'Svédország', name: 'Gamla Stan (Stockholm)', coords: [59.3230, 18.0711], img: 'images/gamla_stan.jpg', desc: 'Stockholm történelmi szigeti óvárosa.' },
+      { country: 'Svájc', name: 'Matterhorn (Zermatt)', coords: [45.9763, 7.6586], img: 'images/matterhorn.jpg', desc: 'Az Alpok ikonikus csúcsa.' },
+      { country: 'Törökország', name: 'Hagia Sophia (Isztambul)', coords: [41.0086, 28.9802], img: 'images/hagia_sophia.jpg', desc: 'Ókori bazilika és mecset Isztambulban.' },
+      { country: 'Ukrajna', name: 'Kijevi Szent Szófia-székesegyház', coords: [50.4501, 30.5234], img: 'images/kijev.jpg', desc: 'Különleges aranykupolás ortodox katedrális.' },
+      { country: 'Egyesült Királyság', name: 'Big Ben (London)', coords: [51.5007, -0.1246], img: 'images/bigben.jpg', desc: 'London híres óratornya.' }
+    ];
+
+    // Add markers and popups
+    const markers = [];
+    places.forEach(p => {
+      const popup = `
+        <div class="popup-content">
+          <img src="${p.img}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p><strong>${p.country}</strong></p>
+          <p>${p.desc}</p>
+        </div>
+      `;
+      const m = L.marker(p.coords).addTo(map).bindPopup(popup);
+      markers.push(m);
+    });
+
+    const bounds = L.latLngBounds(places.map(p => p.coords));
+    map.fitBounds(bounds.pad(0.1));
+
+    markers.forEach((m, i) => {
+      m.on('mouseover', function() { this.openPopup(); });
+      m.on('mouseout', function() { this.closePopup(); });
+    });
+  </script>
 </body>
 </html>
