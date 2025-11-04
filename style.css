@@ -288,3 +288,19 @@ body.blurred footer {
   transition: filter 0.3s ease;
 }
 
+/* Törlés gomb */
+.delBtn {
+  background: none;
+  border: none;
+  color: crimson;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+.delBtn:hover {
+  color: darkred;
+  transform: scale(1.2);
+  background: none;
+}
+
+

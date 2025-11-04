@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function(){
       .then(data => {
         loader.style.display = 'none';
 
-        // Merge with localStorage data
         const saved = JSON.parse(localStorage.getItem('orszagok')) || [];
         const combined = [...data, ...saved];
 
@@ -25,7 +24,19 @@ document.addEventListener('DOMContentLoaded', function(){
             <td>${o.fovaros}</td>
             <td>${o.nepesseg.toLocaleString()}</td>
             <td>${o.eu ? 'Igen' : 'Nem'}</td>
+            <td><button class="delBtn">❌</button></td>
           `;
+
+          tr.querySelector('.delBtn').addEventListener('click', () => {
+            if(confirm(`Biztosan törölni szeretnéd ${o.nev} adatait?`)){
+              tr.remove();
+
+              let orszagok = JSON.parse(localStorage.getItem('orszagok')) || [];
+              orszagok = orszagok.filter(item => item.nev !== o.nev);
+              localStorage.setItem('orszagok', JSON.stringify(orszagok));
+            }
+          });
+
           tabla.appendChild(tr);
         });
       })
@@ -71,6 +82,9 @@ document.addEventListener('DOMContentLoaded', function(){
         return;
       }
 
+      const kepInput = document.getElementById('kep');
+      const kepUtvonal = kepInput && kepInput.value ? kepInput.value : 'default.png';
+
       const payload = {
         nev: document.getElementById('nev').value,
         fovaros: document.getElementById('fovaros').value,
@@ -79,10 +93,9 @@ document.addEventListener('DOMContentLoaded', function(){
         alapit: document.getElementById('alapit').value,
         szin: document.getElementById('szin').value,
         leiras: document.getElementById('leiras').value,
-        kep: document.getElementById('kep')?.value || 'default.png'
+        kep: kepUtvonal
       };
 
-      // Save to localStorage
       let orszagok = JSON.parse(localStorage.getItem('orszagok')) || [];
       orszagok.push(payload);
       localStorage.setItem('orszagok', JSON.stringify(orszagok));
@@ -118,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => {
       zaszloContainer.innerHTML = '';
 
-      // Merge with localStorage data
       const saved = JSON.parse(localStorage.getItem('orszagok')) || [];
       const combined = [...data, ...saved];
 
