@@ -1,9 +1,38 @@
 document.addEventListener('DOMContentLoaded', function(){
-  const video = document.getElementById('promo');
-  if(video){
-    document.getElementById('playBtn').addEventListener('click', ()=> video.play());
-    document.getElementById('pauseBtn').addEventListener('click', ()=> video.pause());
-    document.getElementById('rewindBtn').addEventListener('click', ()=> video.currentTime = Math.max(0, video.currentTime - 5));
+  const promoEl = document.getElementById('promo');
+  let ytPlayer = null;
+  if(promoEl){
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const rewindBtn = document.getElementById('rewindBtn');
+
+    if(promoEl.tagName && promoEl.tagName.toLowerCase() === 'video'){
+      playBtn && playBtn.addEventListener('click', ()=> promoEl.play());
+      pauseBtn && pauseBtn.addEventListener('click', ()=> promoEl.pause());
+      rewindBtn && rewindBtn.addEventListener('click', ()=> promoEl.currentTime = Math.max(0, promoEl.currentTime - 5));
+    } else if(promoEl.tagName && promoEl.tagName.toLowerCase() === 'iframe' && promoEl.src && promoEl.src.includes('youtube.com')){
+      window.onYouTubeIframeAPIReady = function(){
+        ytPlayer = new YT.Player('promo', {
+          events: {
+            'onReady': function(){
+              playBtn && playBtn.addEventListener('click', ()=> ytPlayer.playVideo());
+              pauseBtn && pauseBtn.addEventListener('click', ()=> ytPlayer.pauseVideo());
+              rewindBtn && rewindBtn.addEventListener('click', ()=> {
+                try{
+                  const t = ytPlayer.getCurrentTime();
+                  ytPlayer.seekTo(Math.max(0, t - 5), true);
+                } catch(e){
+                  console.error('YT rewind failed', e);
+                }
+              });
+            }
+          }
+        });
+      };
+      if(window.YT && typeof window.YT.Player === 'function'){
+        setTimeout(()=> window.onYouTubeIframeAPIReady && window.onYouTubeIframeAPIReady(), 0);
+      }
+    }
   }
 
   const tabla = document.querySelector('#orszagTabla tbody');
