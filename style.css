@@ -199,6 +199,7 @@ textarea.error {
   margin-top: 0.6rem;
   display: flex;
   gap: 0.5rem;
+  justify-content: center;
 }
 
 /* Linkek */
