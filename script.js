@@ -90,20 +90,72 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
+    function readFileAndResize(file, maxWidth = 800, mimeType = 'image/png', quality = 0.85){
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error('File olvasási hiba'));
+        reader.onload = () => {
+          const img = new Image();
+          img.onload = () => {
+            let { width, height } = img;
+            if(width > maxWidth){
+              const ratio = maxWidth / width;
+              width = Math.round(width * ratio);
+              height = Math.round(height * ratio);
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            try{
+              const dataUrl = canvas.toDataURL(mimeType, quality);
+              resolve(dataUrl);
+            } catch(e){
+              resolve(reader.result);
+            }
+          };
+          img.onerror = () => reject(new Error('Nem sikerült betölteni a képet'));
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
   const form = document.getElementById('orszagForm');
   const uzenet = document.getElementById('uzenet');
   if(form){
+    const fileInput = document.getElementById('zaszlo');
+    const previewContainer = document.getElementById('preview-container');
+    const previewImg = document.getElementById('preview');
+    if(fileInput){
+      fileInput.addEventListener('change', () => {
+        const f = fileInput.files && fileInput.files[0];
+        if(f){
+          readFileAndResize(f, 800).then(dataUrl => {
+            if(previewImg) previewImg.src = dataUrl;
+            if(previewContainer) previewContainer.style.display = '';
+          }).catch(err => {
+            console.error('Preview hiba', err);
+          });
+        } else {
+          if(previewContainer) previewContainer.style.display = 'none';
+          if(previewImg) previewImg.src = '';
+        }
+      });
+    }
+
     form.addEventListener('submit', function(e){
       e.preventDefault();
       let valid = true;
-      ['nev','fovaros','nepesseg'].forEach(id=>{
+      for(const id of ['nev','fovaros','nepesseg']){
         const el = document.getElementById(id);
         if(!el.value || (el.type==='number' && Number(el.value) <= 0)){
           el.classList.add('error'); valid = false;
         } else {
           el.classList.remove('error');
         }
-      });
+      }
 
       if(!valid){
         uzenet.textContent = 'Kérlek javítsd a hibákat piros mezőkben.';
@@ -111,34 +163,43 @@ document.addEventListener('DOMContentLoaded', function(){
         return;
       }
 
-      const kepInput = document.getElementById('kep');
-      const kepUtvonal = kepInput && kepInput.value ? kepInput.value : 'default.png';
-
-      const payload = {
+      const payloadBase = {
         nev: document.getElementById('nev').value,
         fovaros: document.getElementById('fovaros').value,
         nepesseg: Number(document.getElementById('nepesseg').value),
         eu: document.getElementById('eu').checked,
         alapit: document.getElementById('alapit').value,
         szin: document.getElementById('szin').value,
-        leiras: document.getElementById('leiras').value,
-        kep: kepUtvonal
+        leiras: document.getElementById('leiras').value
       };
 
-      let orszagok = JSON.parse(localStorage.getItem('orszagok')) || [];
-      orszagok.push(payload);
-      localStorage.setItem('orszagok', JSON.stringify(orszagok));
+      const savePayload = (payload) => {
+        let orszagok = JSON.parse(localStorage.getItem('orszagok')) || [];
+        orszagok.push(payload);
+        localStorage.setItem('orszagok', JSON.stringify(orszagok));
 
-      uzenet.style.color = 'green';
-      uzenet.textContent = 'Sikeres mentés (localStorage-be mentve is). Lásd alább:';
-      const pre = document.createElement('pre');
-      pre.textContent = JSON.stringify(payload, null, 2);
-      uzenet.appendChild(pre);
+        $('#orszagForm').fadeOut(400, function(){ 
+          this.reset(); 
+          if(previewContainer) previewContainer.style.display = 'none';
+          if(previewImg) previewImg.src = '';
+          $(this).fadeIn(400); 
+        });
+      };
 
-      $('#orszagForm').fadeOut(400, function(){ 
-        this.reset(); 
-        $(this).fadeIn(400); 
-      });
+      const f = fileInput && fileInput.files && fileInput.files[0];
+      if(f){
+        readFileAndResize(f, 800).then(dataUrl => {
+          const payload = Object.assign({}, payloadBase, { kep: dataUrl });
+          savePayload(payload);
+        }).catch(err => {
+          console.error('Kép mentése sikertelen', err);
+          const payload = Object.assign({}, payloadBase, { kep: 'default.png' });
+          savePayload(payload);
+        });
+      } else {
+        const payload = Object.assign({}, payloadBase, { kep: 'default.png' });
+        savePayload(payload);
+      }
     });
   }
 });
