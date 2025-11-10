@@ -90,7 +90,7 @@
       { country: 'Egyesült Királyság', name: 'Big Ben (London)', coords: [51.5007, -0.1246], img: 'images/bigben.jpg', desc: 'London híres óratornya.' }
     ];
 
-    // Add markers and popups
+    //markerek
     const markers = [];
     places.forEach(p => {
       const popup = `
@@ -108,6 +108,7 @@
     const bounds = L.latLngBounds(places.map(p => p.coords));
     map.fitBounds(bounds.pad(0.1));
 
+    //egér rá
     markers.forEach((m, i) => {
       m.on('mouseover', function() { this.openPopup(); });
       m.on('mouseout', function() { this.closePopup(); });

@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const pauseBtn = document.getElementById('pauseBtn');
     const rewindBtn = document.getElementById('rewindBtn');
 
+    //videó vezérlők
     if(promoEl.tagName && promoEl.tagName.toLowerCase() === 'video'){
       playBtn && playBtn.addEventListener('click', ()=> promoEl.play());
       pauseBtn && pauseBtn.addEventListener('click', ()=> promoEl.pause());
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
+  //országok táblázat betöltése
   const tabla = document.querySelector('#orszagTabla tbody');
   const loader = document.getElementById('loader');
   if(tabla){
@@ -74,6 +76,8 @@ document.addEventListener('DOMContentLoaded', function(){
         console.error(err);
       });
 
+
+    //keresés
     const search = document.getElementById('search');
     if(search){
       search.addEventListener('input', ()=>{
@@ -122,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function(){
       });
     }
 
+  //új ország hozzáadása
   const form = document.getElementById('orszagForm');
   const uzenet = document.getElementById('uzenet');
   if(form){
@@ -251,11 +256,13 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error(err);
     });
 
+  //zászlóra nyomáskor infók
   closeBtn.addEventListener('click', () => {
     modal.style.display = 'none';
     document.body.classList.remove('blurred');
   });
 
+  //bezár
   window.addEventListener('click', (e) => {
     if (e.target === modal) {
       modal.style.display = 'none';
